@@ -1,0 +1,177 @@
+[
+  {
+    "question": "What are the signs and symptoms of a myocardial infarction?",
+    "answer": "A myocardial infarction (heart attack) presents with chest pain or pressure radiating to the left arm or jaw, shortness of breath, diaphoresis (sweating), nausea, and sometimes syncope. Women may have atypical symptoms including fatigue, back pain, and indigestion. EMERGENCY: Call 911 immediately if these symptoms occur. Chew aspirin 325mg if not allergic. Every minute counts — early reperfusion therapy (PCI) within 90 minutes significantly reduces mortality.",
+    "topic": "Emergency Medicine",
+    "source": "MedTraceKB-Emergency",
+    "category": "emergency"
+  },
+  {
+    "question": "What is the interaction between warfarin and aspirin?",
+    "answer": "Warfarin and aspirin have a SEVERE interaction. Aspirin inhibits platelet aggregation while warfarin inhibits clotting factors, creating additive anticoagulation effect that significantly increases bleeding risk — including life-threatening GI bleeding and intracranial hemorrhage. This combination should generally be AVOIDED unless specifically indicated (e.g., mechanical heart valve patients) under close medical supervision with regular INR monitoring. Alternative: use acetaminophen for pain when on warfarin.",
+    "topic": "Drug Interactions",
+    "source": "MedTraceKB-Pharmacology",
+    "category": "drug_interaction"
+  },
+  {
+    "question": "What is the recommended dosage of metformin for type 2 diabetes?",
+    "answer": "Metformin dosing for type 2 diabetes: Start at 500mg twice daily or 850mg once daily with meals to minimize GI side effects. Increase by 500mg weekly as tolerated. Standard dose: 1000mg twice daily (2000mg/day). Maximum: 2550mg/day. Renal adjustment: Reduce dose if eGFR 30-45 mL/min/1.73m². CONTRAINDICATED if eGFR <30. Hold 48 hours before contrast dye procedures. Monitor B12 levels annually with long-term use. [Source: ADA Standards of Care 2024]",
+    "topic": "Medication Dosage",
+    "source": "MedTraceKB-Dosage",
+    "category": "dosage_info"
+  },
+  {
+    "question": "What are the diagnostic criteria for sepsis?",
+    "answer": "Sepsis (Sepsis-3 criteria): Life-threatening organ dysfunction caused by dysregulated host response to infection. Defined as suspected infection + SOFA score increase ≥2. Clinical indicators: altered mental status, respiratory rate >22/min, systolic BP <100mmHg. Septic shock: sepsis + vasopressor requirement + lactate >2 mmol/L despite fluid resuscitation. TREATMENT: 'Hour-1 Bundle' — blood cultures, broad-spectrum antibiotics, 30mL/kg IV crystalloid, vasopressors if needed, lactate measurement. Mortality increases 7% per hour without antibiotics.",
+    "topic": "Diagnosis",
+    "source": "MedTraceKB-CriticalCare",
+    "category": "symptom_diagnosis"
+  },
+  {
+    "question": "How is hypertension treated according to current guidelines?",
+    "answer": "Hypertension treatment (ACC/AHA 2017 Guidelines): Stage 1 (130-139/80-89): Lifestyle modifications first — DASH diet, sodium restriction <2.3g/day, aerobic exercise 150min/week, weight loss, alcohol moderation. Stage 2 (≥140/90): Start pharmacotherapy. First-line: thiazide diuretics (hydrochlorothiazide 12.5-25mg), ACE inhibitors (lisinopril 10-40mg), ARBs (losartan 50-100mg), or CCBs (amlodipine 5-10mg). For Black patients: thiazides or CCBs preferred. CKD: ACE/ARB preferred. Target BP: <130/80 for most patients. Monitor renal function and electrolytes with ACE inhibitors.",
+    "topic": "Treatment Protocols",
+    "source": "MedTraceKB-Cardiology",
+    "category": "treatment_protocol"
+  },
+  {
+    "question": "What are the contraindications of ibuprofen?",
+    "answer": "Ibuprofen (NSAID) absolute contraindications: active peptic ulcer disease, severe renal impairment (eGFR <30), known hypersensitivity or NSAID-exacerbated respiratory disease. Relative contraindications: pregnancy (especially ≥28 weeks — premature closure of ductus arteriosus), heart failure, uncontrolled hypertension, prior GI bleeding, use with anticoagulants. Drug interactions: increases risk of bleeding with warfarin/aspirin, reduces efficacy of antihypertensives, increases lithium/methotrexate toxicity. Prefer acetaminophen in elderly, those with renal or GI risk. [Source: FDA Drug Label]",
+    "topic": "Drug Interactions",
+    "source": "MedTraceKB-Pharmacology",
+    "category": "drug_interaction"
+  },
+  {
+    "question": "What is the first-line treatment for anaphylaxis?",
+    "answer": "Anaphylaxis treatment: EPINEPHRINE is the first-line treatment — no contraindications exist in anaphylaxis. Adult dose: Epinephrine 0.3-0.5mg (1:1000) intramuscularly into the anterolateral thigh. Repeat every 5-15 minutes if needed. EMERGENCY: Call 911. Position patient supine with legs elevated (unless respiratory distress). Secondary: IV fluid bolus (normal saline 1-2L), diphenhydramine 50mg IM/IV, ranitidine 50mg IV, methylprednisolone 125mg IV. Admit for 4-8 hour observation (biphasic reaction risk). Prescribe EpiPen on discharge. Allergy referral for testing.",
+    "topic": "Emergency Medicine",
+    "source": "MedTraceKB-Emergency",
+    "category": "emergency"
+  },
+  {
+    "question": "What are the symptoms of diabetic ketoacidosis (DKA)?",
+    "answer": "Diabetic Ketoacidosis (DKA) symptoms: polyuria, polydipsia, nausea/vomiting, abdominal pain, fruity breath odor (acetone), Kussmaul breathing (deep rapid respirations), altered mental status, dehydration. Labs: blood glucose >250mg/dL, pH <7.3, bicarbonate <18 mEq/L, positive ketones. EMERGENCY treatment: IV fluid resuscitation (0.9% NS 1L/hour initial), insulin infusion (0.1 units/kg/hour after glucose <250 add dextrose), potassium replacement (do NOT give insulin if K+ <3.3). Monitor glucose every hour, electrolytes every 2-4 hours.",
+    "topic": "Emergency Medicine",
+    "source": "MedTraceKB-Endocrinology",
+    "category": "emergency"
+  },
+  {
+    "question": "What is the mechanism of action of statins?",
+    "answer": "Statins (HMG-CoA reductase inhibitors) work by competitively inhibiting HMG-CoA reductase, the rate-limiting enzyme in cholesterol biosynthesis in the liver. This reduces intracellular cholesterol, upregulates LDL receptors, increasing LDL clearance from the blood. Additionally, statins have pleiotropic effects: anti-inflammatory, antioxidant, and plaque-stabilizing properties. High-intensity statins (atorvastatin 40-80mg, rosuvastatin 20-40mg) reduce LDL by ≥50%. Indicated for ASCVD risk reduction, LDL >190mg/dL, diabetes. Side effects: myopathy (check CK if muscle pain), hepatotoxicity (monitor LFTs), new-onset diabetes. [Source: ACC/AHA Cholesterol Guidelines 2019]",
+    "topic": "Pharmacology",
+    "source": "MedTraceKB-Cardiology",
+    "category": "treatment_protocol"
+  },
+  {
+    "question": "What is the treatment protocol for community-acquired pneumonia?",
+    "answer": "Community-Acquired Pneumonia (CAP) treatment: Risk stratify using PSI/PORT or CURB-65. Outpatient (low risk): Healthy adults — amoxicillin 500mg TID x 5 days OR azithromycin 500mg day 1 then 250mg days 2-5. Comorbidities — respiratory fluoroquinolone (levofloxacin 750mg x 5 days) or beta-lactam + macrolide. Inpatient: beta-lactam + macrolide or fluoroquinolone. ICU: beta-lactam + azithromycin or beta-lactam + fluoroquinolone. MRSA/Pseudomonas risk factors: add vancomycin or piperacillin-tazobactam. Follow-up chest X-ray in 6-8 weeks. [Source: IDSA/ATS CAP Guidelines]",
+    "topic": "Treatment Protocols",
+    "source": "MedTraceKB-Pulmonology",
+    "category": "treatment_protocol"
+  },
+  {
+    "question": "What are the side effects of ACE inhibitors?",
+    "answer": "ACE inhibitor (e.g., lisinopril, enalapril) side effects: Common — dry persistent cough (10-15%, due to bradykinin accumulation — switch to ARB). Serious — angioedema (0.1-0.7%, life-threatening, CONTRAINDICATED if prior angioedema). Hyperkalemia (especially with concurrent K-sparing diuretics, NSAIDs, or CKD). First-dose hypotension (especially volume-depleted patients). Acute kidney injury in bilateral renal artery stenosis. Teratogenic — CONTRAINDICATED in pregnancy (category D/X). Monitor: renal function and potassium 1-2 weeks after initiation and dose changes. [Source: FDA, JNC 8 Guidelines]",
+    "topic": "Drug Interactions",
+    "source": "MedTraceKB-Pharmacology",
+    "category": "drug_interaction"
+  },
+  {
+    "question": "How should insulin be dosed in type 1 diabetes?",
+    "answer": "Insulin therapy for Type 1 Diabetes: Total Daily Dose (TDD) = 0.4-0.5 units/kg/day initially. Split: 50% basal (long-acting: glargine, detemir, or degludec once daily) + 50% bolus (rapid-acting: lispro, aspart, or glulisine with meals). Correction doses: (Current glucose - target glucose) / sensitivity factor. Sensitivity factor = 1700/TDD. Carb ratio = 500/TDD. Sick day rules: never stop insulin, increase monitoring, stay hydrated, check ketones. Target: fasting glucose 80-130mg/dL, post-meal <180mg/dL, HbA1c <7%. Continuous glucose monitoring (CGM) strongly recommended. [Source: ADA Standards 2024]",
+    "topic": "Medication Dosage",
+    "source": "MedTraceKB-Endocrinology",
+    "category": "dosage_info"
+  },
+  {
+    "question": "What is the interaction between SSRIs and MAOIs?",
+    "answer": "SSRIs + MAOIs: CONTRAINDICATED — risk of potentially fatal Serotonin Syndrome. Characterized by: agitation, confusion, rapid heart rate, hypertension, dilated pupils, muscle twitching, hyperthermia, and seizures. NEVER combine. Washout periods required: fluoxetine to MAOI — 5 weeks (long half-life); other SSRIs to MAOI — 2 weeks; MAOI to any SSRI — 2 weeks. If serotonin syndrome occurs: stop all serotonergic drugs, supportive care, cyproheptadine (serotonin antagonist) 12mg, IV benzodiazepines for agitation, severe cases may require ICU admission and temperature management. [Source: FDA Boxed Warning]",
+    "topic": "Drug Interactions",
+    "source": "MedTraceKB-Psychiatry",
+    "category": "drug_interaction"
+  },
+  {
+    "question": "What are the diagnostic criteria for type 2 diabetes?",
+    "answer": "Type 2 Diabetes Diagnostic Criteria (ADA 2024): Any ONE of the following on two separate occasions (or once with hyperglycemic crisis symptoms): 1) Fasting plasma glucose ≥126mg/dL (fasting = no caloric intake for ≥8h). 2) 2-hour plasma glucose ≥200mg/dL during 75g OGTT. 3) HbA1c ≥6.5% (performed in certified lab). 4) Random plasma glucose ≥200mg/dL + classic symptoms (polyuria, polydipsia, unexplained weight loss). Prediabetes: FPG 100-125, OGTT 140-199, or HbA1c 5.7-6.4%. Screening: every 3 years from age 35, earlier with risk factors.",
+    "topic": "Diagnosis",
+    "source": "MedTraceKB-Endocrinology",
+    "category": "symptom_diagnosis"
+  },
+  {
+    "question": "What is the treatment for opioid overdose?",
+    "answer": "Opioid overdose (classic triad: pinpoint pupils, unconscious, respiratory depression): EMERGENCY — call 911. Treatment: Naloxone (Narcan) IM/IN 0.4-2mg, repeat every 2-3 minutes as needed (maximum 10mg). May need multiple doses with long-acting opioids (methadone, fentanyl). IV if available: 0.04-0.4mg titrated. Nasal: 4mg/0.1mL. Supportive: rescue breathing, position recovery position, supplemental oxygen. Naloxone duration 30-90 min (shorter than most opioids) — monitor for re-sedation, hospital admission usually required. Public access: naloxone available without prescription in most US states. [Source: SAMHSA Opioid Overdose Guidelines]",
+    "topic": "Emergency Medicine",
+    "source": "MedTraceKB-Emergency",
+    "category": "emergency"
+  },
+  {
+    "question": "What is the recommended pediatric dose of amoxicillin for ear infections?",
+    "answer": "Amoxicillin for Acute Otitis Media (AOM) in children: Standard dose: 80-90mg/kg/day divided every 12 hours (high-dose preferred due to resistant S. pneumoniae). Maximum: 3000mg/day. Duration: 10 days for children <2 years or severe disease; 5-7 days for children ≥2 years with mild-moderate disease. Penicillin allergy: cefdinir 14mg/kg/day or azithromycin. Treatment failure at 48-72h: amoxicillin-clavulanate 90mg/kg/day of amoxicillin component. Watchful waiting appropriate for mild disease in children ≥2 years. [Source: AAP AOM Guidelines 2022]",
+    "topic": "Medication Dosage",
+    "source": "MedTraceKB-Pediatrics",
+    "category": "dosage_info"
+  },
+  {
+    "question": "What are the symptoms of pulmonary embolism?",
+    "answer": "Pulmonary Embolism (PE) symptoms: Sudden onset dyspnea (most common), pleuritic chest pain, tachycardia, hemoptysis, cough, syncope (massive PE). Signs: tachypnea, elevated JVP, S3/S4 gallop, hypoxemia, hypotension (massive PE). Wells Score for pretest probability: clinical signs DVT (+3), PE most likely (+3), HR>100 (+1.5), prior DVT/PE (+1.5), recent surgery/immobilization (+1.5), hemoptysis (+1), malignancy (+1). Diagnosis: CT pulmonary angiography (gold standard), V/Q scan if contrast contraindicated, D-dimer to rule out in low-probability. EMERGENCY: massive PE with hemodynamic instability requires thrombolysis or surgical embolectomy.",
+    "topic": "Diagnosis",
+    "source": "MedTraceKB-Pulmonology",
+    "category": "symptom_diagnosis"
+  },
+  {
+    "question": "How is atrial fibrillation managed?",
+    "answer": "Atrial Fibrillation management: 1) Rate control (most patients): beta-blockers (metoprolol 25-200mg/day) or CCBs (diltiazem 120-360mg/day) targeting resting HR <110 bpm. 2) Rhythm control: antiarrhythmics (flecainide, propafenone for no structural disease; amiodarone for heart failure). DC cardioversion for hemodynamically unstable AF. 3) Stroke prevention: CHA₂DS₂-VASc score ≥2 (men) or ≥3 (women) → anticoagulate. DOACs preferred (apixaban, rivaroxaban, dabigatran) over warfarin except mechanical valves or severe mitral stenosis. 4) Ablation: pulmonary vein isolation for symptomatic paroxysmal AF refractory to medications. [Source: ACC/AHA AF Guidelines 2023]",
+    "topic": "Treatment Protocols",
+    "source": "MedTraceKB-Cardiology",
+    "category": "treatment_protocol"
+  },
+  {
+    "question": "What is the interaction between metformin and contrast dye?",
+    "answer": "Metformin-Contrast Dye Interaction: Iodinated contrast agents can cause acute kidney injury, impairing metformin excretion and leading to metformin accumulation and potentially fatal LACTIC ACIDOSIS. Guidance (ACR 2022): Patients with eGFR ≥30 and no AKI risk factors: may continue metformin, no need to hold routinely for IV contrast. eGFR 30-60 or AKI risk: hold metformin at time of contrast administration, withhold for 48 hours post-procedure, recheck renal function before restarting. eGFR <30: metformin is contraindicated anyway. Intra-arterial contrast (higher nephrotoxicity risk): hold metformin 48h prior regardless. [Source: ACR Manual on Contrast Media 2022]",
+    "topic": "Drug Interactions",
+    "source": "MedTraceKB-Radiology",
+    "category": "drug_interaction"
+  },
+  {
+    "question": "What are the warning signs of stroke (FAST criteria)?",
+    "answer": "Stroke Warning Signs — FAST + BE (BE-FAST): Balance — sudden loss of balance/coordination. Eyes — sudden vision changes or loss. Face drooping — ask patient to smile, is one side drooping? Arm weakness — ask patient to raise both arms, does one drift down? Speech difficulty — slurred, garbled, or unable to speak. Time — call 911 IMMEDIATELY. Door-to-CT target: 25 minutes. Door-to-needle target (tPA): 60 minutes. Time window: IV tPA within 4.5 hours of onset. Mechanical thrombectomy: up to 24 hours in selected patients. DO NOT give aspirin or anticoagulants until hemorrhage excluded by CT. The faster treatment, the less brain damage ('Time is brain').",
+    "topic": "Emergency Medicine",
+    "source": "MedTraceKB-Neurology",
+    "category": "emergency"
+  },
+  {
+    "question": "What is the first-line treatment for H. pylori infection?",
+    "answer": "H. pylori eradication therapy (ACG Guidelines 2022): First-line in areas with clarithromycin resistance >15%: Bismuth quadruple therapy x 14 days — bismuth subsalicylate 525mg QID + metronidazole 500mg TID + tetracycline 500mg QID + PPI twice daily. Alternatively: Concomitant therapy x 14 days — PPI BD + amoxicillin 1g BD + clarithromycin 500mg BD + metronidazole 500mg BD. Test-and-treat: urea breath test or stool antigen test (avoid serology). Post-treatment: confirm eradication 4 weeks after completion. Treatment failure: rifabutin-based or levofloxacin-based salvage therapy. [Source: ACG H. pylori Guidelines 2022]",
+    "topic": "Treatment Protocols",
+    "source": "MedTraceKB-Gastroenterology",
+    "category": "treatment_protocol"
+  },
+  {
+    "question": "What are the signs of appendicitis?",
+    "answer": "Appendicitis presentation: Classic triad — periumbilical pain migrating to RLQ + nausea/vomiting + low-grade fever. Signs: McBurney's point tenderness (1/3 from ASIS to umbilicus), Rovsing's sign (RLQ pain with LLQ palpation), psoas sign (pain with right hip extension), obturator sign (pain with internal rotation of flexed right hip). Alvarado score ≥7 → high suspicion. Labs: leukocytosis, elevated CRP. Diagnosis: CT abdomen/pelvis with contrast (95% sensitivity/specificity). Ultrasound in children/pregnant. Treatment: Laparoscopic appendectomy; uncomplicated appendicitis may be managed with antibiotics (amoxicillin-clavulanate) in selected patients.",
+    "topic": "Diagnosis",
+    "source": "MedTraceKB-Surgery",
+    "category": "symptom_diagnosis"
+  },
+  {
+    "question": "What is the dosage of acetaminophen in adults and when is it toxic?",
+    "answer": "Acetaminophen dosing: Adults — 325-1000mg every 4-6 hours. Maximum: 4000mg/day in healthy adults; 2000mg/day in liver disease, elderly, or heavy alcohol use (>3 drinks/day). Toxicity: Single acute ingestion — Rumack-Matthew nomogram: toxic if >150mcg/mL at 4 hours post-ingestion. Treatment: activated charcoal within 1-2 hours, N-acetylcysteine (NAC) — oral loading dose 140mg/kg then 70mg/kg every 4h x 17 doses or IV protocol. Symptoms: first 24h (nausea/vomiting), 24-72h (asymptomatic with rising LFTs), 72-96h (hepatic failure: jaundice, coagulopathy, encephalopathy). King's College Criteria for transplant listing. [Source: FDA, Rumack BH]",
+    "topic": "Medication Dosage",
+    "source": "MedTraceKB-Toxicology",
+    "category": "dosage_info"
+  },
+  {
+    "question": "How is heart failure with reduced ejection fraction managed?",
+    "answer": "HFrEF management (EF <40%) — GDMT (Guideline-Directed Medical Therapy): Four pillars proven to reduce mortality: 1) ACE inhibitor or ARB or ARNI (sacubitril-valsartan — superior; start after ACE inhibitor washout 36h). 2) Beta-blocker: carvedilol, metoprolol succinate, or bisoprolol — start at low dose, uptitrate. 3) MRA: spironolactone or eplerenone (monitor K+, renal function). 4) SGLT2 inhibitor: dapagliflozin or empagliflozin (reduce HF hospitalization 25%). Loop diuretics (furosemide) for volume overload — symptom relief only. ICD: EF ≤35% on GDMT ≥3 months. CRT: LBBB + QRS ≥150ms + EF ≤35%. Target: uptitrate all 4 pillars to maximum tolerated dose. [Source: ACC/AHA/HFSA HF Guidelines 2022]",
+    "topic": "Treatment Protocols",
+    "source": "MedTraceKB-Cardiology",
+    "category": "treatment_protocol"
+  },
+  {
+    "question": "What drugs are contraindicated in pregnancy?",
+    "answer": "Drugs contraindicated in pregnancy (teratogens): Isotretinoin (Accutane) — severe birth defects, requires iPLEDGE program. Thalidomide — limb defects. Warfarin — embryopathy, CNS defects. Tetracyclines — teeth/bone defects. Fluoroquinolones — cartilage damage. ACE inhibitors/ARBs (2nd-3rd trimester) — renal dysgenesis. Valproic acid — neural tube defects (folate 4mg/day if must use). Lithium — Ebstein's anomaly. Methotrexate — abortifacient, teratogenic. Misoprostol — uterine rupture risk. NSAIDs (≥28 weeks) — premature closure ductus arteriosus. SAFE alternatives: acetaminophen for pain, penicillins/cephalosporins for infections, labetalol/nifedipine/methyldopa for hypertension. Always consult OB before prescribing. [Source: FDA Pregnancy Categories, TERIS]",
+    "topic": "Drug Interactions",
+    "source": "MedTraceKB-ObGyn",
+    "category": "drug_interaction"
+  }
+]

@@ -1,0 +1,108 @@
+# ─────────────────────────────────────────────
+# Environment & Secrets
+# ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ─────────────────────────────────────────────
+# Python
+# ─────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+wheels/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Type checking & linting
+.mypy_cache/
+.dmypy.json
+.ruff_cache/
+.pytype/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.coveragerc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ─────────────────────────────────────────────
+# Node / Frontend
+# ─────────────────────────────────────────────
+node_modules/
+dist/
+.next/
+out/
+.nuxt/
+.cache/
+*.local
+
+# Vite
+frontend/dist/
+frontend/.vite/
+
+# ─────────────────────────────────────────────
+# ChromaDB / Vector Store
+# ─────────────────────────────────────────────
+backend/chroma_db/
+chroma_db/
+*.chroma
+
+# ─────────────────────────────────────────────
+# Logs
+# ─────────────────────────────────────────────
+logs/
+*.log
+*.log.*
+backend/logs/
+
+# ─────────────────────────────────────────────
+# Docker
+# ─────────────────────────────────────────────
+.docker/
+
+# ─────────────────────────────────────────────
+# OS Files
+# ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ─────────────────────────────────────────────
+# IDEs
+# ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─────────────────────────────────────────────
+# Misc
+# ─────────────────────────────────────────────
+*.tmp
+*.temp
+*.bak
+.gemini/

@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    container_name: medtrace-phoenix
+    ports:
+      - "6006:6006"   # Phoenix UI
+      - "4317:4317"   # OTLP gRPC traces
+    volumes:
+      - phoenix_data:/phoenix_data
+    environment:
+      - PHOENIX_WORKING_DIR=/phoenix_data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:6006/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - chroma_data:/app/chroma_db
+    env_file:
+      - .env
+    environment:
+      - API_HOST=0.0.0.0
+      - PHOENIX_BASE_URL=http://phoenix:6006
+      - PHOENIX_COLLECTOR_ENDPOINT=http://phoenix:4317
+    restart: unless-stopped
+    depends_on:
+      phoenix:
+        condition: service_healthy
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host"
+    environment:
+      - VITE_API_URL=http://backend:8000
+    depends_on:
+      - backend
+
+volumes:
+  chroma_data:
+  phoenix_data:
