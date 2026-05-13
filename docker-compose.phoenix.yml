@@ -1,0 +1,20 @@
+services:
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    container_name: medtrace-phoenix
+    ports:
+      - "6006:6006"   # Phoenix UI
+      - "4317:4317"   # OTLP gRPC traces
+    volumes:
+      - phoenix_data:/phoenix_data
+    environment:
+      - PHOENIX_WORKING_DIR=/phoenix_data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:6006/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  phoenix_data:

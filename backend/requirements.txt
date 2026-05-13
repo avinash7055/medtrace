@@ -14,6 +14,7 @@ arize-phoenix>=5.10.0
 arize-phoenix-otel>=0.6.1
 openinference-instrumentation-langchain>=0.1.60
 openinference-instrumentation-openai>=0.1.16
+openinference-instrumentation-google-genai>=0.1.17
 opentelemetry-sdk>=1.28.4
 opentelemetry-exporter-otlp>=1.28.4
 

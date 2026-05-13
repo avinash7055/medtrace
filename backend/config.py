@@ -109,7 +109,7 @@ def setup_phoenix_tracing():
 
     try:
         from phoenix.otel import register
-        from openinference.instrumentation.langchain import LangChainInstrumentor
+        from openinference.instrumentation.google_genai import GoogleGenAIInstrumentor
 
         # Self-hosted Phoenix requires no auth headers — clear any leftover cloud key
         os.environ.pop("OTEL_EXPORTER_OTLP_HEADERS", None)
@@ -119,9 +119,11 @@ def setup_phoenix_tracing():
             # gRPC OTLP collector on the Docker Phoenix container
             endpoint=settings.phoenix_collector_endpoint,
             set_global_tracer_provider=True,
+            auto_instrument=True,  # covers LangChain + LangGraph node spans automatically
         )
 
-        LangChainInstrumentor().instrument(tracer_provider=_tracer_provider)
+        # Instrument direct google.generativeai SDK calls (outside LangChain)
+        GoogleGenAIInstrumentor().instrument(tracer_provider=_tracer_provider)
 
         logger.info(
             f"✅ Phoenix tracing initialised → project='{settings.phoenix_project_name}' "
