@@ -14,6 +14,7 @@ import re
 import time
 import uuid
 from typing import Any, Dict
+import asyncio
 
 from loguru import logger
 from opentelemetry import trace
@@ -275,6 +276,11 @@ async def self_evaluation(state: MedTraceState) -> Dict:
 # Node 6: Evolution Trigger
 # ─────────────────────────────────────────────────────────────────────────────
 
+# ── Evolution Lock — prevents multiple parallel evolution cycles ──────────────
+_evolution_running: bool = False
+_evolution_lock: asyncio.Lock = asyncio.Lock()
+
+
 async def evolution_trigger(state: MedTraceState) -> Dict:
     """
     If avg_score < threshold, fire off an async evolution cycle.
@@ -284,20 +290,47 @@ async def evolution_trigger(state: MedTraceState) -> Dict:
     - The agent queries its own failure traces from Phoenix
     - Generates prompt mutations, runs A/B experiments in Phoenix
     - Promotes winning prompt back to Phoenix Prompt Hub
+
+    A global lock ensures only ONE evolution cycle runs at a time.
+    Concurrent low-score queries skip evolution instead of stacking up.
     """
+    global _evolution_running
+
     avg_score = state.get("avg_score", 10.0)
     threshold = settings.evolution_score_threshold
 
     if avg_score < threshold:
+        # Check lock — skip if evolution already running
+        if _evolution_running:
+            logger.info(
+                f"⏭️  Evolution skipped: already running (avg_score={avg_score})"
+            )
+            return {
+                "evolution_triggered": False,
+                "evolution_reason": "Evolution already in progress — skipped to prevent overlap.",
+            }
+
         logger.warning(
             f"⚡ Evolution triggered: avg_score={avg_score} < threshold={threshold}"
         )
 
-        # Fire-and-forget async evolution (don't block the user response)
-        import asyncio
         from evolution.evolution_engine import run_evolution_cycle
 
-        asyncio.create_task(run_evolution_cycle())
+        async def _run_and_unlock():
+            """Run evolution cycle and release lock when done."""
+            global _evolution_running
+            try:
+                await run_evolution_cycle()
+            except Exception as exc:
+                logger.error(f"Evolution cycle failed: {exc}")
+            finally:
+                _evolution_running = False
+                logger.info("🔓 Evolution lock released")
+
+        # Acquire lock and fire evolution in background
+        _evolution_running = True
+        logger.info("🔒 Evolution lock acquired")
+        asyncio.create_task(_run_and_unlock())
 
         return {
             "evolution_triggered": True,

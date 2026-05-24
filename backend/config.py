@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     # ── Gemini ──────────────────────────────────────────────────────────────
     gemini_api_key: str = ""
     gemini_model: str = "gemini-2.0-flash-exp"
-    gemini_embedding_model: str = "models/embedding-001"
+    gemini_embedding_model: str = "models/gemini-embedding-001"
 
     # ── Phoenix (self-hosted Docker) ──────────────────────────────────────────
     phoenix_base_url: str = "http://localhost:6006"
@@ -175,11 +175,55 @@ def get_langchain_llm():
     )
 
 
-def get_embedding_model():
-    """Return LangChain Google embedding model for ChromaDB."""
-    from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_core.embeddings import Embeddings
+from typing import List
 
-    return GoogleGenerativeAIEmbeddings(
-        model=settings.gemini_embedding_model,
-        google_api_key=settings.gemini_api_key,
+class GeminiBatchEmbeddings(Embeddings):
+    """Custom high-performance embedding class using google-genai SDK for batching."""
+    def __init__(self, model_name: str, api_key: str):
+        self.model_name = model_name
+        self.api_key = api_key
+        self._client = None
+
+    @property
+    def client(self):
+        if self._client is None:
+            from google import genai
+            self._client = genai.Client(api_key=self.api_key)
+        return self._client
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        results = []
+        batch_size = 100
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i+batch_size]
+            try:
+                response = self.client.models.embed_content(
+                    model=self.model_name,
+                    contents=batch
+                )
+                for emb in response.embeddings:
+                    results.append(emb.values)
+            except Exception as e:
+                logger.error(f"Batch embedding failed at chunk {i}: {e}")
+                raise e
+        return results
+
+    def embed_query(self, text: str) -> List[float]:
+        try:
+            response = self.client.models.embed_content(
+                model=self.model_name,
+                contents=text
+            )
+            return response.embeddings[0].values
+        except Exception as e:
+            logger.error(f"Query embedding failed: {e}")
+            raise e
+
+
+def get_embedding_model():
+    """Return LangChain compatible Gemini batch embedding model for ChromaDB."""
+    return GeminiBatchEmbeddings(
+        model_name=settings.gemini_embedding_model,
+        api_key=settings.gemini_api_key,
     )
