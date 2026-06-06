@@ -1,13 +1,13 @@
 # MedTrace: Self-Evolving Medical AI Agent 🧬⚡
 
-**MedTrace** is the world's first medical AI agent that uses **Arize Phoenix** (self-hosted) as an *active self-improvement tool*, rather than just a passive monitoring dashboard. Built for the **Google Cloud Rapid Agent Hackathon (Arize track)**, it autonomously identifies its own weaknesses, experiments with prompt mutations, and promotes winning instructions—with **zero human intervention**.
+**MedTrace** is the world's first medical AI agent that uses **Arize Phoenix** (self-hosted) as an *active self-improvement tool*, rather than just a passive monitoring dashboard. Built for the **Google Cloud Rapid Agent Hackathon (Arize track)** and fully migrated to run **locally via Ollama**, it autonomously identifies its own weaknesses, experiments with prompt mutations, and promotes winning instructions—with **zero human intervention**.
 
 ## 🌟 What Makes MedTrace Unique?
 
 Most agents use tracing purely for observability. **MedTrace closes the loop:**
 
 1. **Active Trace Querying:** The LangGraph agent queries its own low-scoring production traces from Phoenix.
-2. **Autonomous Root Cause Diagnosis:** Gemini analyzes failure patterns and identifies *why* answers were poor.
+2. **Autonomous Root Cause Diagnosis:** Local Ollama (`gemma2:2b`) analyzes failure patterns and identifies *why* answers were poor.
 3. **Self-Improving Prompts:** 3 prompt mutations are generated, evaluated in an A/B experiment, and the winner is automatically promoted—no human required.
 4. **Golden Dataset Curation:** High-scoring traces (≥8.0) are autonomously saved as a Golden Dataset for future reference.
 5. **Clean Observability:** Evaluation calls use `suppress_tracing()` to keep Phoenix traces noise-free — only real agent spans are recorded.
@@ -23,7 +23,7 @@ User Query
 │                                                        │
 │ 1. query_understanding: Extract intent/entities        │
 │ 2. rag_retrieval: ChromaDB vector search               │
-│ 3. gemini_reasoning: Generate response (active prompt) │
+│ 3. llm_reasoning: Generate response (active prompt)    │
 │ 4. answer_generation: Format with citations            │
 │ 5. self_evaluation: LLM-as-Judge (5 rubrics, 0-10)    │
 │ 6. evolution_trigger: IF avg_score < 6.5 ───┐         │
@@ -32,7 +32,7 @@ User Query
     ┌────────────────────────────────────────▼──────────────────────┐
     │ Evolution Engine (evolution_engine.py)                        │
     │ Step 1: Fetch failure traces from Phoenix                     │
-    │ Step 2: Diagnose root cause with Gemini                       │
+    │ Step 2: Diagnose root cause with Ollama                       │
     │ Step 3: Generate 3 prompt mutations                           │
     │ Step 4: Create A/B experiment, evaluate on failure cases      │
     │ Step 5: Promote winning prompt → active prompt                │
@@ -50,7 +50,8 @@ User Query
 | Layer | Technology |
 |---|---|
 | **Agent Framework** | [LangGraph](https://python.langchain.com/docs/langgraph) |
-| **LLM & Embeddings** | Gemini 2.0 Flash (`google-generativeai`) |
+| **Local LLM** | Ollama `gemma2:2b` |
+| **Local Embeddings** | Ollama `nomic-embed-text` |
 | **Observability** | [Arize Phoenix](https://arize.com/docs/phoenix) — self-hosted via Docker |
 | **Tracing SDK** | `phoenix.otel` + `openinference-instrumentation-langchain` |
 | **Vector Store** | [ChromaDB](https://www.trychroma.com/) |
@@ -62,9 +63,13 @@ User Query
 
 ### Prerequisites
 - Docker & Docker Compose
-- A **Google Gemini API Key** (only external credential required)
+- **Ollama** running locally with `gemma2:2b` and `nomic-embed-text` models pulled:
+  ```bash
+  ollama pull gemma2:2b
+  ollama pull nomic-embed-text
+  ```
 
-> **No Phoenix API key needed** — Phoenix runs self-hosted inside Docker.
+> **No cloud credentials or API keys needed** — both Ollama and Phoenix run completely locally.
 
 ### 1. Environment Configuration
 
@@ -72,11 +77,13 @@ User Query
 cd medtrace
 ```
 
-Edit `backend/.env` and set your Gemini API key:
+Edit `backend/.env` to configure Ollama and Phoenix endpoints:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-2.0-flash-exp
+# Ollama (Local LLM)
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=gemma2:2b
+OLLAMA_EMBEDDING_MODEL=nomic-embed-text
 
 # Phoenix (self-hosted — no API key required)
 PHOENIX_BASE_URL=http://localhost:6006
