@@ -3,7 +3,7 @@ MedTrace Evolution Engine — The Heart of Self-Improvement.
 
 This is the world's first agent that uses Phoenix MCP as an ACTIVE tool:
   1. Query own failure traces from Phoenix
-  2. Diagnose root causes with Gemini
+  2. Diagnose root causes with Ollama
   3. Generate 3 prompt mutations
   4. Create Phoenix A/B experiment
   5. Evaluate all mutations on failure cases
@@ -78,7 +78,7 @@ _current_avg_score: float = 7.0  # updated after each agent run
 
 async def diagnose_failures(failure_traces: List[Dict]) -> str:
     """
-    Use Gemini to identify the root cause of low-scoring answers.
+    Use local LLM (Ollama) to identify the root cause of low-scoring answers.
     Analyzes patterns across multiple failure traces.
     """
     if not failure_traces:
@@ -197,7 +197,7 @@ async def evaluate_mutations_on_failures(
 ) -> List[PromptMutation]:
     """
     Run each prompt mutation against the failure test cases.
-    Uses Gemini to generate answers and evaluates them.
+    Uses local LLM (Ollama) to generate answers and evaluates them.
     """
     from agent.tools import retrieve_medical_context, format_context_for_prompt
 
@@ -254,7 +254,7 @@ async def run_evolution_cycle() -> Optional[EvolutionResult]:
     Full autonomous evolution cycle using Phoenix MCP as the active tool.
 
     Step 1: Get failure traces from Phoenix
-    Step 2: Diagnose root cause with Gemini
+    Step 2: Diagnose root cause with Ollama
     Step 3: Generate 3 prompt mutations
     Step 4: Create Phoenix A/B experiment
     Step 5: Evaluate mutations on failure cases

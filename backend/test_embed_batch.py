@@ -2,20 +2,19 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-from google import genai
-
-api_key = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key)
-
+ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 texts = [f"This is sample document chunk number {i}" for i in range(50)]
 
-print("Sending 50 documents in a single API call via raw SDK...")
+print("Sending 50 documents to local Ollama embedding API...")
 try:
-    res = client.models.embed_content(
-        model="models/gemini-embedding-001",
-        contents=texts
+    from langchain_ollama import OllamaEmbeddings
+    embeddings_model = OllamaEmbeddings(
+        model="nomic-embed-text",
+        base_url=ollama_url,
     )
-    print(f"Raw SDK response status: Success!")
-    print(f"Number of embeddings returned: {len(res.embeddings)}")
+    res = embeddings_model.embed_documents(texts)
+    print(f"Ollama response status: Success!")
+    print(f"Number of embeddings returned: {len(res)}")
 except Exception as e:
     print(f"Failed: {e}")
+

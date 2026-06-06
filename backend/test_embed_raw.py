@@ -1,30 +1,45 @@
 import os
+import urllib.request
+import json
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-
-api_key = os.getenv("GEMINI_API_KEY")
+ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 texts = ["Hello world", "How are you?", "Testing embeddings"]
 
-print("--- Testing gemini-embedding-001 ---")
+print("--- Testing raw Ollama /api/embeddings ---")
 try:
-    embeddings_model = GoogleGenerativeAIEmbeddings(
-        model="models/gemini-embedding-001",
-        google_api_key=api_key,
+    # Ollama legacy embeddings endpoint (single string)
+    req = urllib.request.Request(
+        f"{ollama_url}/api/embeddings",
+        data=json.dumps({
+            "model": "nomic-embed-text",
+            "prompt": texts[0]
+        }).encode("utf-8"),
+        headers={"Content-Type": "application/json"}
     )
-    res_lc = embeddings_model.embed_documents(texts)
-    print(f"gemini-embedding-001 returned length: {len(res_lc)}")
+    with urllib.request.urlopen(req, timeout=5) as response:
+        res = json.loads(response.read().decode("utf-8"))
+        embedding = res.get("embedding", [])
+        print(f"Success! /api/embeddings returned length: {len(embedding)}")
 except Exception as e:
-    print(f"gemini-embedding-001 failed: {e}")
+    print(f"Failed: {e}")
 
-print("\n--- Testing gemini-embedding-2 ---")
+print("\n--- Testing raw Ollama /api/embed ---")
 try:
-    embeddings_model = GoogleGenerativeAIEmbeddings(
-        model="models/gemini-embedding-2",
-        google_api_key=api_key,
+    # Ollama modern embed endpoint (batch input)
+    req = urllib.request.Request(
+        f"{ollama_url}/api/embed",
+        data=json.dumps({
+            "model": "nomic-embed-text",
+            "input": texts
+        }).encode("utf-8"),
+        headers={"Content-Type": "application/json"}
     )
-    res_lc = embeddings_model.embed_documents(texts)
-    print(f"gemini-embedding-2 returned length: {len(res_lc)}")
+    with urllib.request.urlopen(req, timeout=5) as response:
+        res = json.loads(response.read().decode("utf-8"))
+        embeddings = res.get("embeddings", [])
+        print(f"Success! /api/embed returned {len(embeddings)} embeddings of length {len(embeddings[0]) if embeddings else 0}")
 except Exception as e:
-    print(f"gemini-embedding-2 failed: {e}")
+    print(f"Failed: {e}")
+

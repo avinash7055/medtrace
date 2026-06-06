@@ -31,7 +31,7 @@ export default function App() {
 
   useEffect(() => {
     fetchDashboardData()
-    const interval = setInterval(fetchDashboardData, 3000)
+    const interval = setInterval(fetchDashboardData, 15000)
     return () => clearInterval(interval)
   }, [fetchDashboardData])
 

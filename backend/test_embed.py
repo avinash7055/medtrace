@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from knowledge_base.loader import load_json_qa_files, qa_pairs_to_documents, chunk_documents
 
 print("Loading documents...")
@@ -10,9 +10,10 @@ pairs = load_json_qa_files()
 docs = qa_pairs_to_documents(pairs)
 chunks = chunk_documents(docs)
 
-embeddings_model = GoogleGenerativeAIEmbeddings(
-    model="models/gemini-embedding-2",
-    google_api_key=os.getenv("GEMINI_API_KEY"),
+ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+embeddings_model = OllamaEmbeddings(
+    model="nomic-embed-text",
+    base_url=ollama_url,
 )
 
 test_batch = [c.page_content for c in chunks[:10]]
@@ -24,3 +25,4 @@ try:
         print(f"Dimensions of first embedding: {len(res[0])}")
 except Exception as e:
     print(f"Error during langchain embedding: {e}")
+

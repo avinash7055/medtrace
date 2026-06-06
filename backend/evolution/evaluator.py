@@ -1,7 +1,7 @@
 """
 LLM-as-Judge Evaluator for MedTrace.
 
-Scores every Gemini answer on 5 medical quality rubrics using Gemini itself.
+Scores every LLM answer on 5 medical quality rubrics using Ollama itself.
 Rubrics: medical_accuracy, completeness, safety, clarity, citation_quality
 
 Returns structured float scores (0–10) and textual feedback.
@@ -66,7 +66,7 @@ async def evaluate_answer(
     query: str, answer: str
 ) -> Tuple[Dict[str, float], str]:
     """
-    Evaluate a medical answer using Gemini as judge.
+    Evaluate a medical answer using Ollama as judge.
 
     Args:
         query:  The original medical question

@@ -1,26 +1,26 @@
 import os
+import urllib.request
+import json
 from dotenv import load_dotenv
 load_dotenv()
 
-from google import genai
-
 try:
-    api_key = os.getenv("GEMINI_API_KEY")
-    print(f"API Key present: {bool(api_key)}")
+    ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    print(f"Connecting to Ollama at: {ollama_url}")
     
-    client = genai.Client(api_key=api_key)
-    print("Listing all models from Gemini API...")
-    
-    models = list(client.models.list())
-    embedding_models = [m.name for m in models if "embed" in m.name.lower() or any("embed" in act.lower() for act in m.supported_actions)]
-    
-    print("\n--- Available Embedding Models ---")
-    for model_name in embedding_models:
-        print(f" - {model_name}")
+    req = urllib.request.Request(f"{ollama_url}/api/tags")
+    with urllib.request.urlopen(req, timeout=5) as response:
+        data = json.loads(response.read().decode("utf-8"))
+        models = data.get("models", [])
         
-    print("\n--- All Available Models ---")
-    for m in models[:15]:
-        print(f" - {m.name} | Supported Actions: {m.supported_actions}")
+    print(f"\nFound {len(models)} local Ollama models:")
+    for m in models:
+        name = m.get("name", "unknown")
+        details = m.get("details", {})
+        family = details.get("family", "unknown")
+        parameter_size = details.get("parameter_size", "unknown")
+        print(f" - {name} (family: {family}, size: {parameter_size})")
         
 except Exception as e:
-    print(f"Error during API call: {e}")
+    print(f"Error checking Ollama models: {e}")
+

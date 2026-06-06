@@ -1,12 +1,12 @@
 """
 MedTrace Configuration Module
-Central configuration for all services: Gemini, Phoenix, ChromaDB, FastAPI.
+Central configuration for all services: Ollama, Phoenix, ChromaDB, FastAPI.
 Phoenix tracing is set up here and instruments the entire LangChain pipeline.
 """
 
 import os
 import sys
-from typing import Optional
+from typing import Optional, List
 from functools import lru_cache
 
 from dotenv import load_dotenv
@@ -42,10 +42,10 @@ logger.add(
 class Settings(BaseSettings):
     """All application settings — loaded from environment / .env file."""
 
-    # ── Gemini ──────────────────────────────────────────────────────────────
-    gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.0-flash-exp"
-    gemini_embedding_model: str = "models/gemini-embedding-001"
+    # ── Ollama (Local LLM) ─────────────────────────────────────────────────
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "gemma2:2b"
+    ollama_embedding_model: str = "nomic-embed-text"
 
     # ── Phoenix (self-hosted Docker) ──────────────────────────────────────────
     phoenix_base_url: str = "http://localhost:6006"
@@ -109,7 +109,6 @@ def setup_phoenix_tracing():
 
     try:
         from phoenix.otel import register
-        from openinference.instrumentation.google_genai import GoogleGenAIInstrumentor
 
         # Self-hosted Phoenix requires no auth headers — clear any leftover cloud key
         os.environ.pop("OTEL_EXPORTER_OTLP_HEADERS", None)
@@ -121,9 +120,6 @@ def setup_phoenix_tracing():
             set_global_tracer_provider=True,
             auto_instrument=True,  # covers LangChain + LangGraph node spans automatically
         )
-
-        # Instrument direct google.generativeai SDK calls (outside LangChain)
-        GoogleGenAIInstrumentor().instrument(tracer_provider=_tracer_provider)
 
         logger.info(
             f"✅ Phoenix tracing initialised → project='{settings.phoenix_project_name}' "
@@ -146,84 +142,26 @@ def get_tracer():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Gemini client factory
+# Ollama LLM client factory
 # ─────────────────────────────────────────────────────────────────────────────
-_gemini_client = None
-
-
-def get_gemini_client():
-    """Singleton Gemini generative model client."""
-    global _gemini_client
-    if _gemini_client is None:
-        import google.generativeai as genai
-
-        genai.configure(api_key=settings.gemini_api_key)
-        _gemini_client = genai.GenerativeModel(settings.gemini_model)
-        logger.info(f"✅ Gemini client ready → model='{settings.gemini_model}'")
-    return _gemini_client
 
 
 def get_langchain_llm():
-    """Return a LangChain-wrapped Gemini LLM for use inside LangGraph nodes."""
-    from langchain_google_genai import ChatGoogleGenerativeAI
+    """Return a LangChain-wrapped Ollama LLM for use inside LangGraph nodes."""
+    from langchain_ollama import ChatOllama
 
-    return ChatGoogleGenerativeAI(
-        model=settings.gemini_model,
-        google_api_key=settings.gemini_api_key,
+    return ChatOllama(
+        model=settings.ollama_model,
+        base_url=settings.ollama_base_url,
         temperature=0.2,
-        convert_system_message_to_human=True,
     )
 
 
-from langchain_core.embeddings import Embeddings
-from typing import List
-
-class GeminiBatchEmbeddings(Embeddings):
-    """Custom high-performance embedding class using google-genai SDK for batching."""
-    def __init__(self, model_name: str, api_key: str):
-        self.model_name = model_name
-        self.api_key = api_key
-        self._client = None
-
-    @property
-    def client(self):
-        if self._client is None:
-            from google import genai
-            self._client = genai.Client(api_key=self.api_key)
-        return self._client
-
-    def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        results = []
-        batch_size = 100
-        for i in range(0, len(texts), batch_size):
-            batch = texts[i:i+batch_size]
-            try:
-                response = self.client.models.embed_content(
-                    model=self.model_name,
-                    contents=batch
-                )
-                for emb in response.embeddings:
-                    results.append(emb.values)
-            except Exception as e:
-                logger.error(f"Batch embedding failed at chunk {i}: {e}")
-                raise e
-        return results
-
-    def embed_query(self, text: str) -> List[float]:
-        try:
-            response = self.client.models.embed_content(
-                model=self.model_name,
-                contents=text
-            )
-            return response.embeddings[0].values
-        except Exception as e:
-            logger.error(f"Query embedding failed: {e}")
-            raise e
-
-
 def get_embedding_model():
-    """Return LangChain compatible Gemini batch embedding model for ChromaDB."""
-    return GeminiBatchEmbeddings(
-        model_name=settings.gemini_embedding_model,
-        api_key=settings.gemini_api_key,
+    """Return LangChain compatible Ollama embedding model for ChromaDB."""
+    from langchain_ollama import OllamaEmbeddings
+
+    return OllamaEmbeddings(
+        model=settings.ollama_embedding_model,
+        base_url=settings.ollama_base_url,
     )

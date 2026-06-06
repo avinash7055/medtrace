@@ -1,20 +1,18 @@
 # Core LLM & Agent
-google-generativeai>=0.8.3
+langchain-ollama>=0.3.0
 langgraph>=0.2.55
 langchain>=0.3.11
-langchain-google-genai>=2.0.7
 langchain-community>=0.3.11
 langchain-core>=0.3.24
 
 # Vector Store
 chromadb>=0.5.23
+langchain-chroma>=0.2.0
 
 # Phoenix Tracing & Evaluation
 arize-phoenix>=5.10.0
 arize-phoenix-otel>=0.6.1
 openinference-instrumentation-langchain>=0.1.60
-openinference-instrumentation-openai>=0.1.16
-openinference-instrumentation-google-genai>=0.1.17
 opentelemetry-sdk>=1.28.4
 opentelemetry-exporter-otlp>=1.28.4
 

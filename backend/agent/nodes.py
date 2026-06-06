@@ -5,7 +5,7 @@ Each node is a pure async function:  state → partial_state_update
 All nodes add custom OTEL span attributes for Phoenix tracing.
 
 Node execution order:
-  query_understanding → rag_retrieval → gemini_reasoning
+  query_understanding → rag_retrieval → llm_reasoning
       → answer_generation → self_evaluation → evolution_trigger
 """
 
@@ -132,16 +132,16 @@ async def rag_retrieval(state: MedTraceState) -> Dict:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Node 3: Gemini Reasoning
+# Node 3: LLM Reasoning (Ollama)
 # ─────────────────────────────────────────────────────────────────────────────
 
-async def gemini_reasoning(state: MedTraceState) -> Dict:
+async def llm_reasoning(state: MedTraceState) -> Dict:
     """
-    Send retrieved context + query to Gemini using the active prompt version.
+    Send retrieved context + query to Ollama LLM using the active prompt version.
     Records which prompt version produced this reasoning.
     """
     tracer = get_tracer()
-    with tracer.start_as_current_span("medtrace.gemini_reasoning") as span:
+    with tracer.start_as_current_span("medtrace.llm_reasoning") as span:
         llm = get_langchain_llm()
         prompt_version, prompt_template = get_active_prompt()
 
@@ -155,7 +155,7 @@ async def gemini_reasoning(state: MedTraceState) -> Dict:
             response = await llm.ainvoke(full_prompt)
             reasoning = response.content
         except Exception as exc:
-            logger.error(f"Gemini reasoning failed: {exc}")
+            logger.error(f"LLM reasoning failed: {exc}")
             reasoning = (
                 "I was unable to process this query due to a technical error. "
                 "Please consult a qualified medical professional."
@@ -165,10 +165,10 @@ async def gemini_reasoning(state: MedTraceState) -> Dict:
             "prompt_version": prompt_version,
             "context_length": len(context),
             "retrieval_count": state.get("retrieval_count", 0),
-            "medtrace.node": "gemini_reasoning",
+            "medtrace.node": "llm_reasoning",
         })
 
-        logger.info(f"Gemini reasoning complete (prompt={prompt_version}, {len(reasoning)} chars)")
+        logger.info(f"LLM reasoning complete (prompt={prompt_version}, {len(reasoning)} chars)")
         return {
             "reasoning": reasoning,
             "prompt_version": prompt_version,
@@ -196,7 +196,7 @@ async def answer_generation(state: MedTraceState) -> Dict:
             if doc.get("score", 0) > 0.4
         })
 
-        # The reasoning IS the answer (already formatted by Gemini)
+        # The reasoning IS the answer (already formatted by the LLM)
         answer = reasoning
 
         _set_span_attrs(span, {
@@ -218,7 +218,7 @@ async def answer_generation(state: MedTraceState) -> Dict:
 
 async def self_evaluation(state: MedTraceState) -> Dict:
     """
-    Score the answer on 5 medical quality rubrics using Gemini as judge.
+    Score the answer on 5 medical quality rubrics using LLM as judge.
     This is what Phoenix traces — scores become features for evolution.
 
     Rubrics:

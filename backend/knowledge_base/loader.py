@@ -98,7 +98,7 @@ def initialize_knowledge_base(force_reload: bool = False) -> int:
     total_chunks = len(chunks)
     
     if total_chunks == 0:
-        logger.info("🎉 All documents are already indexed in ChromaDB! Resume complete.")
+        logger.info("[Success] All documents are already indexed in ChromaDB! Resume complete.")
         return vs._collection.count()
         
     logger.info(f"Starting database indexing: remaining chunks to embed = {total_chunks} of {len(pairs)} total.")
@@ -118,7 +118,7 @@ def initialize_knowledge_base(force_reload: bool = False) -> int:
             except Exception as e:
                 err_str = str(e)
                 if "RESOURCE_EXHAUSTED" in err_str or "429" in err_str:
-                    logger.warning(f"⚠️ Network / Rate limit issue: {err_str}. Waiting 60s before retry (attempt {attempt+1}/{retries})...")
+                    logger.warning(f"[Warning] Network / Rate limit issue: {err_str}. Waiting 60s before retry (attempt {attempt+1}/{retries})...")
                     time.sleep(60)
                 else:
                     raise e
@@ -127,18 +127,18 @@ def initialize_knowledge_base(force_reload: bool = False) -> int:
 
         processed += len(batch)
         pct = (processed / total_chunks) * 100
-        logger.info(f"📊 Progress: {processed}/{total_chunks} chunks indexed ({pct:.1f}%) | Remaining: {total_chunks - processed} chunks")
+        logger.info(f"Progress: {processed}/{total_chunks} chunks indexed ({pct:.1f}%) | Remaining: {total_chunks - processed} chunks")
         
-        # Sleep for 60 seconds to reset the 100 RPM quota window
-        if processed < total_chunks:
-            logger.info("Sleeping 60s to respect Gemini API Free Tier rate limit...")
-            time.sleep(60)
+        # No rate-limiting sleep needed for local Ollama embeddings
+        pass
+
 
     total = vs._collection.count()
     logger.info(f"Knowledge base ready: {total} chunks indexed")
     return total
 
 if __name__ == "__main__":
-    print("🔄 Indexing real medical Q&A database into ChromaDB...")
+    print("Indexing real medical Q&A database into ChromaDB...")
     initialize_knowledge_base(force_reload=False)
-    print("✅ Done!")
+    print("Done!")
+

@@ -2,7 +2,7 @@
 MedTrace LangGraph Agent Graph.
 
 Builds and compiles the stateful LangGraph agent:
-  query_understanding → rag_retrieval → gemini_reasoning
+  query_understanding → rag_retrieval → llm_reasoning
       → answer_generation → self_evaluation → evolution_trigger → END
 
 Every edge is unconditional — all nodes always execute in sequence.
@@ -21,7 +21,7 @@ from agent.state import MedTraceState
 from agent.nodes import (
     query_understanding,
     rag_retrieval,
-    gemini_reasoning,
+    llm_reasoning,
     answer_generation,
     self_evaluation,
     evolution_trigger,
@@ -38,7 +38,7 @@ def build_medtrace_graph():
     # ── Register nodes ───────────────────────────────────────────────────────
     graph.add_node("query_understanding", query_understanding)
     graph.add_node("rag_retrieval", rag_retrieval)
-    graph.add_node("gemini_reasoning", gemini_reasoning)
+    graph.add_node("llm_reasoning", llm_reasoning)
     graph.add_node("answer_generation", answer_generation)
     graph.add_node("self_evaluation", self_evaluation)
     graph.add_node("evolution_trigger", evolution_trigger)
@@ -46,8 +46,8 @@ def build_medtrace_graph():
     # ── Define edges (linear pipeline) ───────────────────────────────────────
     graph.set_entry_point("query_understanding")
     graph.add_edge("query_understanding", "rag_retrieval")
-    graph.add_edge("rag_retrieval", "gemini_reasoning")
-    graph.add_edge("gemini_reasoning", "answer_generation")
+    graph.add_edge("rag_retrieval", "llm_reasoning")
+    graph.add_edge("llm_reasoning", "answer_generation")
     graph.add_edge("answer_generation", "self_evaluation")
     graph.add_edge("self_evaluation", "evolution_trigger")
     graph.add_edge("evolution_trigger", END)
